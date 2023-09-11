@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  zookeeper:
+    image: 'wurstmeister/zookeeper:latest'
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+#      ZOO_SERVERS: server.1=zookeeper:2888:3888;2181 server.2=zookeeper2:2888:3888;2181 server.3=zookeeper3:2888:3888;2181
+
+#  zookeeper2:
+#    image: zookeeper:3.9.0
+#    ports:
+#      - 2182:2181
+#    environment:
+#      ZOO_MY_ID: 2
+#      ZOO_SERVERS: server.1=zookeeper:2888:3888;2181 server.2=zookeeper2:2888:3888;2181 server.3=zookeeper3:2888:3888;2181
+#
+#  zookeeper3:
+#    image: zookeeper:3.9.0
+#    ports:
+#      - 2183:2181
+#    environment:
+#      ZOO_MY_ID: 3
+#      ZOO_SERVERS: server.1=zookeeper:2888:3888;2181 server.2=zookeeper2:2888:3888;2181 server.3=zookeeper3:2888:3888;2181
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - '9092:9092'
+    volumes:
+      - "kafka_data:/kafka"
+      - "./kafka-config:/opt/kafka/config/"
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+
+volumes:
+  kafka_data:
+    driver: local
