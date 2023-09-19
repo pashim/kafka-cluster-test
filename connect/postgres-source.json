@@ -1,0 +1,24 @@
+{
+  "name": "postgres-source",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "query": "select users.* from users",
+    "mode": "incrementing",
+    "incrementing.column.name": "id",
+    "name": "postgres-source",
+    "connection.url": "jdbc:postgresql://postgres:5432/postgres",
+    "connection.user": "postgres",
+    "db.name": "postgres",
+    "topic.prefix": "postgres-test",
+    "poll.interval.ms": "1000",
+    "tasks.max": "1",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+    "transforms":"copyFieldToKey,extractKeyFromStruct",
+    "transforms.copyFieldToKey.type":"org.apache.kafka.connect.transforms.ValueToKey",
+    "transforms.copyFieldToKey.fields":"k_key",
+    "transforms.extractKeyFromStruct.type":"org.apache.kafka.connect.transforms.ExtractField$Key",
+    "transforms.extractKeyFromStruct.field":"k_key"
+  }
+}

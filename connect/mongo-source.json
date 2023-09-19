@@ -1,0 +1,10 @@
+{
+  "name": "mongodb-source",
+  "config": {
+    "connector.class": "com.mongodb.kafka.connect.MongoSourceConnector",
+    "connection.uri": "mongodb://mongo1:27017",
+    "database": "test",
+    "collection": "connector-test",
+    "topics": "mongo-connect-test"
+  }
+}

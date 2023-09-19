@@ -1,0 +1,22 @@
+{
+  "name": "mongodb-sink",
+  "config": {
+    "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
+    "name": "mongodb-sink",
+    "input.data.format" : "JSON",
+    "connection.uri": "mongodb://mongo1:27017",
+    "topics": "postgres-test-processed-3",
+    "max.num.retries": "3",
+    "retries.defer.timeout": "5000",
+    "max.batch.size": "0",
+    "database": "test",
+    "collection": "postgres-sink-test",
+    "tasks.max": "1",
+
+    "key.ignore": true,
+    "topic.key.ignore": "postgres-test-processed-3",
+
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.storage.StringConverter"
+  }
+}
